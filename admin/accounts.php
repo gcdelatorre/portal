@@ -23,7 +23,7 @@
 
     <?php
 
-        $sql = "SELECT * FROM applications";
+        $sql = "SELECT * FROM accounts";
         $result = mysqli_query($conn, $sql);
 
         if (!$result) {
@@ -32,26 +32,28 @@
 
         echo "<table border='1'>
         <tr>
-            <th>Applicant ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Date</th>
+            <th>account ID</th>
+            <th>Scholar ID</th>
+            <th>username</th>
+            <th>password</th>
+            <th>actions</th>
         </tr>";
-
+        
         if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
                 echo "<tr>";
-                echo "<td>" . htmlspecialchars($row['applicant_id']) . "</td>";
-                echo "<td>" . htmlspecialchars($row['name']) . "</td>";
-                echo "<td>" . htmlspecialchars($row['email']) . "</td>";
-                echo "<td>" . htmlspecialchars($row['date']) . "</td>";
+                echo "<td>" . htmlspecialchars($row['account_id']) . "</td>";
+                echo "<td>" . htmlspecialchars($row['scholar_id']) . "</td>";
+                echo "<td>" . htmlspecialchars($row['username']) . "</td>";
+                echo "<td>" . htmlspecialchars($row['password']) . "</td>";
                 echo "<td>
                         <form method='POST'>
-                        <input type='hidden' name='applicant_id' value='" . $row['applicant_id'] . "'>
-                        <input type='hidden' name='name' value='" . $row['name'] . "'>
-                        <input type='hidden' name='email' value='" . $row['email'] . "'>
-                        <button type='submit' name='approve'>Approve</button>
-                        <button type='submit' name='reject'>Reject</button>
+                        <input type='hidden' name='account_id' value='" . htmlspecialchars($row['account_id']) . "'>
+                        <input type='hidden' name='applicant_id' value='" . htmlspecialchars($row['scholar_id']) . "'>
+                        <input type='hidden' name='name' value='" . htmlspecialchars($row['username']) . "'>
+                        <input type='hidden' name='email' value='" . htmlspecialchars($row['password']) . "'>
+                        <button type='submit' name='deactivate'>deactivate</button>
+                        <button type='submit' name='idk'>idk</button>
                         </form>
                     </td>";
                 echo "</tr>";
