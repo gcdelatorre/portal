@@ -58,9 +58,11 @@ function addToScholars($name, $email, $conn) {
     $email_safe = mysqli_real_escape_string($conn, (string)$email);
 
     $username = generateUsername($name_safe);
-    $password = generateRandomPassword(7);
+    $passwordPlain = generateRandomPassword(7);
+    $passwordHash = password_hash($passwordPlain, PASSWORD_DEFAULT);
+    $role = "scholar";
 
-    $sql = "INSERT INTO `scholars` (`name`, `email`, `date`) 
+    $sql = "INSERT INTO `scholars` (`name`, `email`, `date`, `role`, `unhashedPassword`) 
             VALUES ('{$name_safe}', '{$email_safe}', current_timestamp())";
 
     try {
@@ -69,7 +71,7 @@ function addToScholars($name, $email, $conn) {
         $scholar_id = mysqli_insert_id($conn);
         if ($scholar_id) {
             // add account record (separate function)
-            addScholarAccount($scholar_id, $username, $password);
+            addScholarAccount($scholar_id, $username, $passwordHash, $role, $passwordPlain);
         }
         $_SESSION['message'] = "<p style='color:green;'>Scholar added successfully!</p>";
     }

@@ -1,5 +1,6 @@
 <?php
 session_start();
+include("../database.php");
 ?>
 
 <!DOCTYPE html>
@@ -20,30 +21,44 @@ session_start();
 
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login_submit'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $username = mysqli_real_escape_string($conn, $_POST['username']);
+    $password = mysqli_real_escape_string($conn, $_POST['password']);
+    
+    // check if user exists in the accounts table
+    $sql = "SELECT * FROM accounts WHERE username='$username'";
+    $result = mysqli_query($conn, $sql);
 
-    // Dummy accounts
-    $accounts = [
-        "admin" => ["password" => "admin123", "role" => "admin"],
-        "student" => ["password" => "student123", "role" => "student"]
-    ];
 
-    if (isset($accounts[$username]) && $accounts[$username]['password'] === $password) {
-        // Login successful
-        if ($accounts[$username]['role'] === 'admin') {
-            $_SESSION['admin_username'] = $username;
-            header("Location: ../admin/dashboard.php");
+    if (!$result) {
+        die("Query failed: " . mysqli_error($conn));
+    }
+
+    // step 2: if user found, verify password
+    if (mysqli_num_rows($result) == 1) {
+        $row = mysqli_fetch_assoc($result);
+        if (password_verify($password, $row['password'])) {
+            // Password is correct, start a session
+            $_SESSION['account_id'] = $row['account_id'];
+            $_SESSION['username'] = $row['username'];
+
+            // Redirect based on role
+            if ($row['role'] == 'admin') {
+                header("Location: ../admin/dashboard.php");
+            } elseif ($row['role'] == 'scholar') {
+                header("Location: ../scholar/profile.php");
+            } else {
+                echo "Unknown user role.";
+            }
             exit();
-        } else if ($accounts[$username]['role'] === 'student') {
-            $_SESSION['student_username'] = $username;
-            header("Location: ../scholar/profile.php");
-            exit();
+        } else {
+            echo "Invalid password.";
         }
     } else {
-        echo "<p style='color:red;'>Invalid username or password.</p>";
+        echo "No user found with that username.";
     }
 }
+
+
 ?>
 
 </body>

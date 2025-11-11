@@ -36,6 +36,8 @@
             <th>Scholar ID</th>
             <th>username</th>
             <th>password</th>
+            <th>role</th>
+            <th>unhashedPassword</th>
             <th>actions</th>
         </tr>";
         
@@ -46,12 +48,16 @@
                 echo "<td>" . htmlspecialchars($row['scholar_id']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['username']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['password']) . "</td>";
+                echo "<td>" . htmlspecialchars($row['role']) . "</td>";
+                echo "<td>" . htmlspecialchars($row['unhashedPassword']) . "</td>";
                 echo "<td>
                         <form method='POST'>
                         <input type='hidden' name='account_id' value='" . htmlspecialchars($row['account_id']) . "'>
                         <input type='hidden' name='applicant_id' value='" . htmlspecialchars($row['scholar_id']) . "'>
                         <input type='hidden' name='name' value='" . htmlspecialchars($row['username']) . "'>
                         <input type='hidden' name='email' value='" . htmlspecialchars($row['password']) . "'>
+                        <input type='hidden' name='name' value='" . htmlspecialchars($row['role']) . "'>
+                        <input type='hidden' name='unhashedPassword' value='" . htmlspecialchars($row['unhashedPassword']) . "'>
                         <button type='submit' name='deactivate'>deactivate</button>
                         <button type='submit' name='idk'>idk</button>
                         </form>
