@@ -62,7 +62,7 @@ function addToScholars($name, $email, $conn) {
     $passwordHash = password_hash($passwordPlain, PASSWORD_DEFAULT);
     $role = "scholar";
 
-    $sql = "INSERT INTO `scholars` (`name`, `email`, `date`, `role`, `unhashedPassword`) 
+    $sql = "INSERT INTO `scholars` (`name`, `email`, `date`) 
             VALUES ('{$name_safe}', '{$email_safe}', current_timestamp())";
 
     try {
@@ -80,11 +80,11 @@ function addToScholars($name, $email, $conn) {
     }
 }
 
-function addScholarAccount($scholar_id, $username, $password) {
+function addScholarAccount($scholar_id, $username, $passwordHash, $role, $passwordPlain) {
     global $conn;
 
-    $sql = "INSERT INTO `accounts` (`scholar_id`, `username`, `password`)
-            VALUES ('$scholar_id', '$username', '$password')";
+    $sql = "INSERT INTO `accounts` (`scholar_id`, `username`, `password`, `role`, `unhashedPassword`)
+            VALUES ('$scholar_id', '$username', '$passwordHash', '$role', '$passwordPlain')";
 
     try {
         mysqli_query($conn, $sql);
