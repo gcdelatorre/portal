@@ -1,23 +1,37 @@
 <?php
-session_start(); // MUST be first
-include("../database.php")
+session_start();
+include("../database.php");
 ?>
 <!DOCTYPE html>
- <html lang="en">
- <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>renewals page</title>
- </head>
- <body>
-    
-    <?php include 'header.php'; ?>
-    
-    <h2>renewals page</h2>
-    <p>Manage renewal applications here.(check renewal then if approve, scholar status will be active again)</p>
-
-
-   print renewals here from the renewals database
-
- </body>
- </html>
+<html>
+<head>
+    <title>Admin: Renewals</title>
+</head>
+<body>
+    <h2>Renewal Applications</h2>
+    <table border="1" cellpadding="5">
+        <tr>
+            <th>Renewal ID</th>
+            <th>Scholar Name</th>
+            <th>Message</th>
+            <th>Certificate of Birth</th>
+            <th>Certificate of Indigency</th>
+            <th>Action</th>
+        </tr>
+        <?php
+        $result = mysqli_query($conn, "SELECT * FROM renewals");
+        while($row = mysqli_fetch_assoc($result)){
+            echo "<tr>";
+            echo "<td>".$row['renewal_id']."</td>";
+            echo "<td>".$row['name']."</td>";
+            echo "<td>".$row['message']."</td>";
+            echo "<td><a href='".$row['certificate_of_birth']."' target='_blank'>View</a></td>";
+            echo "<td><a href='".$row['certificate_of_indigency']."' target='_blank'>View</a></td>";
+            echo "<td><a href='approve_renewal.php?id=".$row['renewal_id']."'>Approve</a> | 
+                      <a href='reject_renewal.php?id=".$row['renewal_id']."'>Reject</a></td>";
+            echo "</tr>";
+        }
+        ?>
+    </table>
+</body>
+</html>

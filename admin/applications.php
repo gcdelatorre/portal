@@ -72,13 +72,13 @@
                 echo "<td>" . htmlspecialchars($row['email']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['date']) . "</td>";
                 echo "<td>
-                        <form method='POST' onclick=\"return confirmAction(event)\">
+                        <form method='POST'>
                         <input type='hidden' name='applicant_id' value='" . htmlspecialchars($row['applicant_id']) . "'>
                         <input type='hidden' name='name' value='" . htmlspecialchars($row['name']) . "'>
                         <input type='hidden' name='email' value='" . htmlspecialchars($row['email']) . "'>
                         <input type='hidden' name='date' value='" . htmlspecialchars($row['date']) . "'>
-                        <button type='submit' name='approve' onsubmit=\"return confirmAction('approve_application')\">Approve</button>
-                        <button type='submit' name='reject' onsubmit=\"return confirmAction('reject_application')\">Reject</button>
+                        <button type='submit' name='approve' onClick=\"return confirmAction('approve_application')\">Approve</button>
+                        <button type='submit' name='reject' onClick=\"return confirmAction('reject_application')\">Reject</button>
                         </form>
                     </td>";
                 echo "</tr>";
