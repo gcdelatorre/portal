@@ -9,16 +9,32 @@ if (isset($_POST['logout'])) {
 ?>
 <link rel="stylesheet" href="../styles.css">
 
-<div class="navbar">
-    <h1>Scholarship Portal — Admin</h1>
-    <div class="nav-links">
-        <a href="accounts.php">Accounts</a>
-        <a href="applications.php">Applications</a>
-        <a href="renewals.php">Renewals</a>
-        <a href="scholars.php">Scholars</a>
-
-        <form method="post" style="display:inline; margin-left:10px;">
+<div class="sidebar" id="sidebar">
+    <h1>Admin</h1>
+    <nav class="nav">
+        <a href="accounts.php"><span class="label">Accounts</span></a>
+        <a href="applications.php"><span class="label">Applications</span></a>
+        <a href="renewals.php"><span class="label">Renewals</span></a>
+        <a href="scholars.php"><span class="label">Scholars</span></a>
+    </nav>
+    <div class="logout">
+        <form method="post">
             <button class="btn" type="submit" name="logout">Logout</button>
         </form>
     </div>
 </div>
+
+<button class="sidebar-toggle" id="sidebarToggle" title="Toggle sidebar">←</button>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+    var btn = document.getElementById('sidebarToggle');
+    var sidebar = document.getElementById('sidebar');
+    if (!btn || !sidebar) return;
+    btn.addEventListener('click', function(e){
+        e.preventDefault();
+        sidebar.classList.toggle('collapsed');
+        btn.textContent = sidebar.classList.contains('collapsed') ? '→' : '←';
+    });
+});
+</script>

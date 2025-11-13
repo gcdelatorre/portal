@@ -1,5 +1,12 @@
 <?php
 session_start();
+
+// Check if user is logged in and is scholar
+if (!isset($_SESSION['account_id']) || $_SESSION['role'] !== 'scholar') {
+    header("Location: ../portal/login.php");
+    exit();
+}
+
 include("../database.php");
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -85,17 +92,49 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
 <head>
     <title>Renewal Submission</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .form-group{margin-bottom:16px}
+        .form-group label{display:block;font-weight:600;margin-bottom:6px;color:#111}
+        .form-group input[type=file]{padding:8px;border:2px solid #e5e7eb;border-radius:6px;cursor:pointer}
+        .form-group input[type=file]:hover{border-color:var(--accent)}
+        .form-group textarea{font-family:inherit;padding:10px;border:1px solid #e5e7eb;border-radius:6px;resize:vertical}
+        .success-msg{background:#d1fae5;color:#065f46;padding:12px;border-radius:6px;margin-bottom:16px;border-left:4px solid #10b981}
+        .error-msg{background:#fee2e2;color:#991b1b;padding:12px;border-radius:6px;margin-bottom:16px;border-left:4px solid #ef4444}
+    </style>
 </head>
 <body>
-    <h2>Renewal Submission Page</h2>
-    <form method="post" enctype="multipart/form-data" onsubmit="return confirm('submit_renewal');">
-        <label>Certificate of Birth:</label>
-        <input type="file" name="certificate_of_birth" required><br>
-        <label>Certificate of Indigency:</label>
-        <input type="file" name="certificate_of_indigency" required><br>
-        <label>Message:</label>
-        <input type="text" name="message"><br>
-        <input type="submit" name="submit_renewal" value="Submit Renewal">
-    </form>
+    <?php include 'scholarnav.php'; ?>
+    <div class="container">
+        <h2>Scholarship Renewal Submission</h2>
+        <p>Submit your documents and message below.</p>
+
+        <?php if (isset($ok) && $ok): ?>
+            <div class="success-msg">✓ Renewal submitted successfully!</div>
+        <?php elseif (isset($ok) && !$ok): ?>
+            <div class="error-msg">✗ Error: submission failed. Please try again.</div>
+        <?php endif; ?>
+
+        <form method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="birth">Certificate of Birth <span style="color:red">*</span></label>
+                <input type="file" id="birth" name="certificate_of_birth" accept="image/*,.pdf" required>
+                <small style="color:var(--muted)">Image or PDF file</small>
+            </div>
+
+            <div class="form-group">
+                <label for="indigency">Certificate of Indigency <span style="color:red">*</span></label>
+                <input type="file" id="indigency" name="certificate_of_indigency" accept="image/*,.pdf" required>
+                <small style="color:var(--muted)">Image or PDF file</small>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Message (optional)</label>
+                <textarea id="message" name="message" rows="4" placeholder="Add any additional information..."></textarea>
+            </div>
+
+            <button class="btn" type="submit" name="submit_renewal">Submit Renewal</button>
+        </form>
+    </div>
 </body>
 </html>

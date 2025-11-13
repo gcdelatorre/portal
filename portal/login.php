@@ -55,10 +55,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login_submit'])) {
             }
             exit();
         } else {
-            echo "Invalid password.";
+            echo "<div class='error'>Invalid password.</div>";
         }
     } else {
-        echo "No user found with that username.";
+        echo "<div class='error'>No user found with that username.</div>";
     }
 }
 

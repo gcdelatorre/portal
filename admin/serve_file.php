@@ -1,17 +1,14 @@
 <?php
 session_start();
-include __DIR__ . '/../database.php';
 
-// Simple admin check - adjust to your real admin/session logic
-// Debug: log session contents (remove this in production)
-error_log('serve_file session: ' . var_export($_SESSION, true));
-
-if (!isset($_SESSION['account_id'])) {
-    error_log('serve_file: no account_id in session, denying access');
+// Check if user is logged in and is admin
+if (!isset($_SESSION['account_id']) || $_SESSION['role'] !== 'admin') {
     http_response_code(403);
     echo 'Forbidden';
     exit;
 }
+
+include __DIR__ . '/../database.php';
 
 $renewal_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $type = $_GET['type'] ?? '';

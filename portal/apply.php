@@ -29,20 +29,18 @@
         <?php
             if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_application'])) {
                 // In a real system you could save to DB or redirect here
-                
-                $applicant_name = $_POST['fullname'];
-                $applicant_email = $_POST['email'];
-                
-                $sql = "INSERT INTO `applications` (`applicant_id`, `name`, `email`, `date`) 
+
+                $applicant_name = mysqli_real_escape_string($conn, $_POST['fullname']);
+                $applicant_email = mysqli_real_escape_string($conn, $_POST['email']);
+
+                $sql = "INSERT INTO `applications` (`applicant_id`, `name`, `email`, `date`)
                     VALUES (NULL, '$applicant_name' , '$applicant_email', current_timestamp())";
-                
-                try {
-                    mysqli_query($conn, $sql);
-                    echo "<p class='success'>Application submitted successfully!</p>";
-                    echo "<p class='success'>Please wait until we review your application! we will send an email eme eme!</p>";
-                }
-                catch (mysqli_sql_exception) {
-                    echo "Could not register";
+
+                if (mysqli_query($conn, $sql)) {
+                    echo "<div class='success'>Application submitted successfully!</div>";
+                    echo "<div class='success'>Please wait until we review your application! We will send an email.</div>";
+                } else {
+                    echo "<div class='error'>Could not register: " . mysqli_error($conn) . "</div>";
                 }
             }
         ?>

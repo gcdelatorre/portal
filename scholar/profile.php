@@ -1,5 +1,11 @@
 <?php
 session_start(); // MUST be first
+
+// Check if user is logged in and is scholar
+if (!isset($_SESSION['account_id']) || $_SESSION['role'] !== 'scholar') {
+    header("Location: ../portal/login.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
