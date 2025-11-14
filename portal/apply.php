@@ -40,7 +40,7 @@
                     echo "<div class='success'>Application submitted successfully!</div>";
                     echo "<div class='success'>Please wait until we review your application! We will send an email.</div>";
                 } else {
-                    echo "<div class='error'>Could not register: " . mysqli_error($conn) . "</div>";
+                    echo "<div class='error'>Could not register: kupal ka ba boss" . mysqli_error($conn) . "</div>";
                 }
             }
         ?>
