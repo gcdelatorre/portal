@@ -1,5 +1,7 @@
 # Scholarship Management System (Ongoing)
 
+trash ui for now bruh, just trynna go with the functionalities
+
 I decided to try build our **group final project** as part of learning **backend development**.  
 It's a web-based **scholarship management system**.  
 
@@ -33,7 +35,6 @@ This helps me understand **how the frontend communicates with the backend**, and
 - **Backend:** PHP  
 - **Database:** MySQL  
 - **Frontend:** HTML, CSS, JavaScript  
-- **Optional:** AJAX for dynamic updates  
 
 ---
 
