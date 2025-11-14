@@ -1,7 +1,5 @@
 <?php
     include("../database.php");
-
-    
 ?>
 
 <!DOCTYPE html>
@@ -11,7 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Application Form</title>
 
-    <!-- link the external CSS -->
     <link rel="stylesheet" href="apply.css">
     <link rel="stylesheet" href="../styles.css">
 </head>
@@ -23,18 +20,29 @@
         onsubmit="return confirmAction('submit_application')">
             <input type="text" name="fullname" placeholder="Full Name" required>
             <input type="email" name="email" placeholder="Email Address" required>
+            <select name="religion" id="religion">
+                <option value="Roman Catholic">Roman Catholic</option>
+                <option value="Christian Asido">Christian Asido</option>
+                <option value="INC">INC</option>
+            </select>
+            <select name="civil_status" id="civil_status">
+                <option value="Single">Single</option>
+                <option value="Married">Married</option>
+                <option value="Divorced">Divorced</option>
+            </select>
             <input class="btn" type="submit" name="submit_application" value="Submit Application">
         </form>
 
         <?php
             if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_application'])) {
-                // In a real system you could save to DB or redirect here
 
                 $applicant_name = mysqli_real_escape_string($conn, $_POST['fullname']);
                 $applicant_email = mysqli_real_escape_string($conn, $_POST['email']);
+                $applicant_religion = mysqli_real_escape_string($conn, $_POST['religion']);
+                $applicant_civil_status = mysqli_real_escape_string($conn, $_POST['civil_status']);
 
-                $sql = "INSERT INTO `applications` (`applicant_id`, `name`, `email`, `date`)
-                    VALUES (NULL, '$applicant_name' , '$applicant_email', current_timestamp())";
+                $sql = "INSERT INTO `applications` (`applicant_id`, `name`, `email`, `religion`, `civil_status`, `date`)
+                    VALUES (NULL, '$applicant_name' , '$applicant_email', '$applicant_religion', '$applicant_civil_status', current_timestamp())";
 
                 if (mysqli_query($conn, $sql)) {
                     echo "<div class='success'>Application submitted successfully!</div>";
