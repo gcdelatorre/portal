@@ -1,9 +1,9 @@
 # Scholarship Management System (Ongoing)
 
-I decided to build our **group final project** as part of learning **backend development**.  
+I decided to try build our **group final project** as part of learning **backend development**.  
 It's a web-based **scholarship management system**.  
 
-My goal is to just **practice backend and database ** while creating a functional project.  
+My goal is to just **practice backend and database** while creating a functional project.  
 This helps me understand **how the frontend communicates with the backend**, and how data flows between a Backend and a Database.
 
 ---
