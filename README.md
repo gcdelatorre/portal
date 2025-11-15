@@ -2,6 +2,12 @@
 
 trash ui for now bruh, just trynna go with the functionalities
 
+# FIX
+- file path for the renewal submissions. (file path of the files after submitting renewal)
+- generate a file inside the uploads with their name format.
+- inside the generated file, contains the uploaded requirements (image/pdf/png)
+- update display in the view renewal admin page, update the file pathing
+
 I decided to try build our **group final project** as part of learning **backend development**.  
 It's a web-based **scholarship management system**.  
 
